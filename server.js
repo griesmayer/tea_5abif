@@ -75,6 +75,18 @@ app.patch("/teas/:id", (req, res) => {
     res.json(tea);   
 });
 
+app.delete("/teas/:id", (req, res) => {
+    const id = parseInt(req.params.id);
+    const pos = teas.findIndex(t => t.id === id);
+    
+    if (pos === -1) {
+        return res.status(404).json({error : "Tea not found!"});
+    }
+    
+    teas.splice(pos, 1);
+    return res.status(204).send();
+});
+
 // Start the server
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
