@@ -1,17 +1,30 @@
 // server.js
+const express = require("express");
+const app = express();
+const port = process.env.PORT || 3000;
 
-// Import the built-in 'http' module
-const http = require('http');
+const teas = [
+  { id: 1, name: "Earl Grey", category: "Schwarztee" },
+  { id: 2, name: "Assam", category: "Schwarztee" },
+  { id: 3, name: "Sencha", category: "Grüntee" },
+  { id: 4, name: "Matcha", category: "Grüntee" },
+  { id: 5, name: "Pai Mu Tan", category: "Weißtee" },
+  { id: 6, name: "Tie Guan Yin", category: "Oolong" },
+  { id: 7, name: "Pfefferminztee", category: "Kräutertee" },
+  { id: 8, name: "Kamillentee", category: "Kräutertee" },
+  { id: 9, name: "Hagebuttentee", category: "Früchtetee" },
+  { id: 10, name: "Rooibos Vanille", category: "Rooibostee" }
+];
 
-// Create a simple HTTP server
-const server = http.createServer((req, res) => {
-  // Set the response header
-  res.writeHead(200, { 'Content-Type': 'text/plain' });
-   // Send the response text
-  res.end('Hello World\n');
+app.get("/", (req, res) => {
+    res.send("Hello Thomas Griesmayer!");
 });
 
-// The server will listen on port 3000
-server.listen(3000, () => {
-  console.log('Server is running at http://localhost:3000');
+app.get("/teas", (req, res) => {
+    res.json(teas);
+});
+
+// Start the server
+app.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}`);
 });
