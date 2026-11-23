@@ -62,6 +62,19 @@ app.put("/teas/:id", (req, res) => {
     res.json(teas[pos]);
 });
 
+app.patch("/teas/:id", (req, res) => {
+    const id = parseInt(req.params.id);
+    const { name, category } = req.body;
+
+    const tea = teas.find(t => t.id === id);
+    if (!tea) {
+        return res.status(404).json({error : "Tea not found!"});
+    }
+    if (name != undefined) tea.name = name;
+    if (category != undefined) tea.category = category;
+    res.json(tea);   
+});
+
 // Start the server
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
