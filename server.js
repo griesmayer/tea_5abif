@@ -24,6 +24,16 @@ app.get("/teas", (req, res) => {
     res.json(teas);
 });
 
+app.get("/teas/:id", (req, res) => {
+    const id = parseInt(req.params.id);
+    const tea = teas.find(t => t.id === id)
+
+    if (!tea) {
+        return res.status(404).json({error : "Tea not found!"});
+    }
+    res.json(tea);
+});
+
 // Start the server
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
