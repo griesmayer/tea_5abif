@@ -1,6 +1,7 @@
 // server.js
 const express = require("express");
 const app = express();
+app.use(express.json());
 const port = process.env.PORT || 3000;
 
 const teas = [
@@ -32,6 +33,18 @@ app.get("/teas/:id", (req, res) => {
         return res.status(404).json({error : "Tea not found!"});
     }
     res.json(tea);
+});
+
+app.post("/teas", (req, res) => {
+    const { name, category } = req.body;
+
+    if (!name || !category) {
+        return res.status(400).json({error : "Name and category required!"});
+    }
+    const newId = teas.length ? teas[teas.length - 1].id + 1 : 1;
+    const newTea = {id : newId, name, category};
+    teas.push(newTea);
+    res.status(201).json(newTea);
 });
 
 // Start the server
